@@ -12,14 +12,14 @@ spec:
   template:
     spec:
       securityContext:
-        runAsNonRoot: true
+        runAsNonRoot: false
       automountServiceAccountToken: false
       containers:
       - name: main-server
         imagePullPolicy: IfNotPresent
         env:
         - name: PORT
-          value: 3000
+          value: "3000"
         ports:
         - name: http
           containerPort: 3000
@@ -37,10 +37,10 @@ spec:
           timeoutSeconds: 5
         resources:
           requests:
-            cpu: 500m
-            memory: 128Mi
+            cpu: 100m
+            memory: 64Mi
           limits:
-            cpu: 500m
-            memory: 128Mi
+            cpu: 100m
+            memory: 64Mi
         securityContext:
-          readOnlyRootFilesystem: true
+          readOnlyRootFilesystem: false
