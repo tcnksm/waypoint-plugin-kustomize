@@ -8,8 +8,7 @@ project = "example-nodejs"
 app "example-nodejs" {
   deploy { 
     use "kustomize" {
-      namespace = "example"
-      patchesStrategicMerge = [
+      patches_strategic_merge = [
         "patch-deployment.yaml",
       ]
     }
