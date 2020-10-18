@@ -13,6 +13,7 @@ import (
 	"github.com/hashicorp/waypoint-plugin-sdk/component"
 	"github.com/hashicorp/waypoint-plugin-sdk/terminal"
 	"github.com/hashicorp/waypoint/builtin/docker"
+	"github.com/hashicorp/waypoint/builtin/k8s"
 	"gopkg.in/yaml.v2"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -76,7 +77,7 @@ func (p *Platform) DeployFunc() interface{} {
 	return p.deploy
 }
 
-func (b *Platform) deploy(ctx context.Context, ui terminal.UI, src *component.Source, dockerImage *docker.Image) (*Deployment, error) {
+func (b *Platform) deploy(ctx context.Context, ui terminal.UI, src *component.Source, dockerImage *docker.Image, deployConfig *component.DeploymentConfig) (*k8s.Deployment, error) {
 	u := ui.Status()
 	defer u.Close()
 
@@ -134,6 +135,16 @@ func (b *Platform) deploy(ctx context.Context, ui terminal.UI, src *component.So
 	step.Done()
 
 	step = sg.Add(fmt.Sprintf("Generating %s ...", basePatchDeploymentYAML))
+
+	// https://www.waypointproject.io/docs/entrypoint
+	env := []corev1.EnvVar{}
+	for k, v := range deployConfig.Env() {
+		env = append(env, corev1.EnvVar{
+			Name:  k,
+			Value: v,
+		})
+	}
+
 	basePatchDeployment := &appsv1.Deployment{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: "apps/v1",
@@ -158,6 +169,7 @@ func (b *Platform) deploy(ctx context.Context, ui terminal.UI, src *component.So
 						{
 							Name:  "main-server",
 							Image: dockerImage.Name(),
+							Env:   env,
 						},
 					},
 				},
@@ -244,5 +256,8 @@ func (b *Platform) deploy(ctx context.Context, ui terminal.UI, src *component.So
 	step.Update("Successfully finished kubectl apply")
 	step.Done()
 
-	return &Deployment{}, nil
+	return &k8s.Deployment{
+		Id:   id,
+		Name: name,
+	}, nil
 }
