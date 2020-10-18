@@ -13,6 +13,10 @@ require (
 	golang.org/x/net v0.0.0-20201016165138-7b1cca2348c0 // indirect
 	golang.org/x/sys v0.0.0-20201017003518-b09fb700fbb7 // indirect
 	google.golang.org/protobuf v1.25.0
+	gopkg.in/yaml.v2 v2.3.0
+	k8s.io/api v0.18.0
+	k8s.io/apimachinery v0.18.0
+	sigs.k8s.io/kustomize/api v0.6.3
 )
 
 // https://github.com/ory/dockertest/issues/208

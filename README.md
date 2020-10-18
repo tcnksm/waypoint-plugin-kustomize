@@ -8,7 +8,7 @@ app "example-nodejs" {
     use "kustomize" {
       namespace = "example"
       resources = [
-        "base-deployment.yaml",
+        "github.com/tcnksm/waypoint-plugin-kustomize/kustomize/remote-base/default?ref=main",
       ]
       patchesStrategicMerge = [
         "patch-deployment.yaml",
