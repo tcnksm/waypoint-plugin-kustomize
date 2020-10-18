@@ -20,8 +20,7 @@ The following is the basic configuration of using this plugin.
  }
  ```
 
-By default, it uses [default base](/kustomize/remote-base/default/) and adds patches of Waypoint related configuration. If you want to change the base you can change it by specifying it in the `resources` field. In `patches_strategic_merge` field, you can specify your own patches (see [example](/example/patch-deployment.ya\
- ml)).
+By default, it uses [default base](/kustomize/remote-base/default/) and adds patches of Waypoint related configuration. If you want to change the base you can change it by specifying it in the `resources` field. In `patches_strategic_merge` field, you can specify your own patches (see [example](/example/patch-deployment.yaml)). 
 
 The followings are the current limitations of this plugin:
 
