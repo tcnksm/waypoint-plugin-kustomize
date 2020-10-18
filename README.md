@@ -21,7 +21,7 @@ app "example-nodejs" {
 To install the plugin, run the following command:
 
 ```bash
-$ make build && make install
+$ make install
 ```
 
 With this, the plugin binary is installed in `${HOME}/.config/waypoint/plugins/`.

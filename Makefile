@@ -1,12 +1,6 @@
 PLUGIN_NAME=kustomize
 
-all: protos build
-
-protos:
-	@echo ""
-	@echo "Build Protos"
-
-	protoc -I . --go_opt=plugins=grpc --go_out=../../../../ ./platform/output.proto
+all: build
 
 build:
 	@echo ""
@@ -14,7 +8,7 @@ build:
 
 	go build -o ./bin/waypoint-plugin-${PLUGIN_NAME} ./main.go 
 
-install:
+install: build
 	@echo ""
 	@echo "Installing Plugin"
 
