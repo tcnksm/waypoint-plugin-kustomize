@@ -1,5 +1,7 @@
 # Waypoint Plugin Kustomize
 
+## Configure
+
 ```hcl
 project = "example-nodejs"
 
@@ -7,14 +9,20 @@ app "example-nodejs" {
   deploy { 
     use "kustomize" {
       namespace = "example"
-      resources = [
-        "github.com/tcnksm/waypoint-plugin-kustomize/kustomize/remote-base/default?ref=main",
-      ]
       patchesStrategicMerge = [
         "patch-deployment.yaml",
       ]
     }
   }
 }
-
 ```
+
+## Install
+
+To install the plugin, run the following command:
+
+```bash
+$ make build && make install
+```
+
+With this, the plugin binary is installed in `${HOME}/.config/waypoint/plugins/`.
